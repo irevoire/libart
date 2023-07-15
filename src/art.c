@@ -476,6 +476,7 @@ static void add_child16(art_node16 *n, art_node **ref, unsigned char c, void *ch
 }
 
 static void add_child4(art_node4 *n, art_node **ref, unsigned char c, void *child) {
+    printf("Inserting a child with key %c (%u)\n", c, c);
     if (n->n.num_children < 4) {
         int idx;
         for (idx=0; idx < n->n.num_children; idx++) {
@@ -549,6 +550,7 @@ static int prefix_mismatch(const art_node *n, const unsigned char *key, int key_
 static void* recursive_insert(art_node *n, art_node **ref, const unsigned char *key, int key_len, void *value, int depth, int *old, int replace) {
     // If we are at a NULL node, inject a leaf
     if (!n) {
+        printf("Nothing in the tree currently. Creating a first leaf for \"%s\"\n", key);
         *ref = (art_node*)SET_LEAF(make_leaf(key, key_len, value));
         return NULL;
     }

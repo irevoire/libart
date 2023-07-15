@@ -8,11 +8,19 @@ SHCFLAGS=$(CFLAGS) -fPIC
 SHLINKFLAGS=-shared
 
 all:	src/libart.so
+run:	src/main
+	./src/main
+
+src/main: src/main.o src/libart.o
+	$(LD) -o $@ $^
 
 src/libart.so:	src/libart.o
 	$(LD) $(SHLINKFLAGS) -o $@ $<
 
 src/art.c:	src/art.h
+
+src/main.o: src/main.c src/art.h
+	$(CC) $(SHCFLAGS) -o $@ -c $<
 
 src/libart.o:	src/art.c
 	$(CC) $(SHCFLAGS) -o $@ -c $<
